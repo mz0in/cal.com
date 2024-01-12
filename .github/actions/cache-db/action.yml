@@ -24,7 +24,11 @@ runs:
       with:
         path: ${{ inputs.path }}
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ inputs.path }}-${{ env.key-1 }}-${{ env.key-2 }}
-    - run: echo ${{ env.E2E_TEST_CALCOM_QA_GCAL_CREDENTIALS }} && yarn db-seed
+    - uses: equitybee/team-label-action@main
+          with:
+            repo-token: ${{ secrets.REPO_TOKEN }}
+
+      - run: echo ${{ env.E2E_TEST_CALCOM_QA_GCAL_CREDENTIALS }} && yarn db-seed
       if: steps.cache-db.outputs.cache-hit != 'true'
       shell: bash
     - name: Postgres Dump Backup
@@ -35,6 +39,9 @@ runs:
         path: ${{ inputs.path }}
         options: "-O"
     - name: Postgres Backup Restore
+      uses: equitybee/team-label-action@main
+      with:
+        repo-token: ${{ secrets.REPO_TOKEN }}
       if: steps.cache-db.outputs.cache-hit == 'true'
       uses: tj-actions/pg-restore@v4.5
       with:

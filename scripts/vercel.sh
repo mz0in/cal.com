@@ -61,6 +61,15 @@ curl -f -sS -o /dev/null -X POST "$VERCEL_PROJECT_ENDPOINT" \
   -H "Authorization: Bearer $VERCEL_TOKEN" \
   --data-raw '{
     "target": "preview",
+    "gitBranch": "$VERCEL_GIT_COMMIT_REF",
+    "type": "encrypted",
+    "key": "DATABASE_URL",
+    "value": "$NEW_DATABASE_URL"
+  }' || {
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $VERCEL_TOKEN" \
+  --data-raw '{
+    "target": "preview",
     "gitBranch": "'$VERCEL_GIT_COMMIT_REF'",
     "type": "encrypted",
     "key": "DATABASE_URL",

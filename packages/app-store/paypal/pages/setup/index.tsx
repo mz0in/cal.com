@@ -104,9 +104,13 @@ export default function PayPalSetup() {
                 https://developer.paypal.com/api/rest/#link-getclientidandclientsecret
               </a>
 
-              <p className="text-lgf text-default mt-5 font-bold">Setup instructions</p>
+              <p className="text-lgf text-default mt-5 font-bold">Setup instructions
+- The token input is for secure access to your account and is required for business account setup.
+- Depending on your country, you may need to generate the token via the following methods:</p>
               <p className="text-default font-semi mt-2">
                 Remember to only proceed with the following steps if your account has already been upgraded to
+   a business account and you have obtained the token input.
+-
                 a business account. Also keep in mind that some of the following steps might be different
                 since Paypal offers different experiences based on your country.
               </p>

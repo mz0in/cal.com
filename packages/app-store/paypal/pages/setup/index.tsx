@@ -1,6 +1,6 @@
 import { AlertCircleIcon } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 
@@ -18,6 +18,10 @@ export default function PayPalSetup() {
   const [credentialId] = paypalPaymentAppCredentials?.userCredentialIds || [-1];
   const showContent = !!integrations.data && integrations.isSuccess && !!credentialId;
   const saveKeysMutation = trpc.viewer.appsRouter.updateAppCredentials.useMutation({
+  throwOnChange: true, // Ensure mutation is triggered even if the values haven't changed
+  onError: (error) => {
+    console.error('Mutation error:', error);
+  },
     onSuccess: () => {
       showToast(t("keys_have_been_saved"), "success");
       router.push("/event-types");

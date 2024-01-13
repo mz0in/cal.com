@@ -106,21 +106,9 @@ Cal.com officially launched as v.1.0 on the 15th of September 2021 and we've com
 
 ## Getting Started
 
-To get a local copy up and running, please follow these simple steps.
+### PayPal Integration
 
-### Prerequisites
-
-Here is what you need to be able to run Cal.com.
-
-- Node.js (Version: >=18.x)
-- PostgreSQL
-- Yarn _(recommended)_
-
-> If you want to enable any of the available integrations, you may want to obtain additional credentials for each one. More details on this can be found below under the [integrations section](#integrations).
-
-## Development
-
-### Setup
+To integrate PayPal with Cal.com, follow these steps:
 
 1. Clone the repo into a public GitHub repository (or fork https://github.com/calcom/cal.com/fork). If you plan to distribute the code, keep the source code public to comply with [AGPLv3](https://github.com/calcom/cal.com/blob/main/LICENSE). To clone in a private repository, [acquire a commercial license](https://cal.com/sales)
 
@@ -144,6 +132,95 @@ Here is what you need to be able to run Cal.com.
    ```
 
 4. Set up your `.env` file
+
+   - Duplicate `.env.example` to `.env`
+   - Use `openssl rand -base64 32` to generate a key and add it under `NEXTAUTH_SECRET` in the `.env` file.
+   - Use `openssl rand -base64 32` to generate a key and add it under `CALENDSO_ENCRYPTION_KEY` in the `.env` file.
+
+### PayPal Integration
+
+To integrate PayPal with Cal.com, follow these steps:
+
+1. Clone the repo into a public GitHub repository (or fork https://github.com/calcom/cal.com/fork). If you plan to distribute the code, keep the source code public to comply with [AGPLv3](https://github.com/calcom/cal.com/blob/main/LICENSE). To clone in a private repository, [acquire a commercial license](https://cal.com/sales)
+
+   ```sh
+   git clone https://github.com/calcom/cal.com.git
+   ```
+
+   > If you are on Windows, run the following command on `gitbash` with admin privileges: <br> > `git clone -c core.symlinks=true https://github.com/calcom/cal.com.git` <br>
+   > See [docs](https://cal.com/docs/how-to-guides/how-to-troubleshoot-symbolic-link-issues-on-windows#enable-symbolic-links) for more details.
+
+2. Go to the project folder
+
+   ```sh
+   cd cal.com
+   ```
+
+3. Install packages with yarn
+
+   ```sh
+   yarn
+   ```
+
+4. Set up your `.env` file
+
+   - Duplicate `.env.example` to `.env`
+   - Use `openssl rand -base64 32` to generate a key and add it under `NEXTAUTH_SECRET` in the `.env` file.
+   - Use `openssl rand -base64 32` to generate a key and add it under `CALENDSO_ENCRYPTION_KEY` in the `.env` file.
+
+To get a local copy up and running, including the necessary steps for setting up and testing the PayPal integration, please follow these simple steps.
+
+### Prerequisites
+- Node.js (Version: >=18.x)
+- PostgreSQL
+- Yarn _(recommended)_
+- PayPal Developer Account
+
+Here is what you need to be able to run Cal.com.
+
+- Node.js (Version: >=18.x)
+- PostgreSQL
+- Yarn _(recommended)_
+
+> If you want to enable any of the available integrations, you may want to obtain additional credentials for each one. More details on this can be found below under the [integrations section](#integrations).
+
+## Development
+
+### Setup
+
+1. Register a new application by clicking the Register one now link.
+2. Fill in your company details.
+3. Select PayPal as the product to integrate with.
+4. Set the Redirect URL for OAuth <Cal.com URL>/api/integrations/paypal/callback replacing Cal.com URL with the URI at which your application runs.
+5. Click on done and copy the Client ID and secret into the `PAYPAL_CLIENT_ID` and `PAYPAL_CLIENT_SECRET` fields.
+6. Set the `PAYPAL_CLIENT_SECRET` env variable to `{your_domain} ({support_email})`. For example, `Cal.com (support@cal.com)`.
+
+1. Register a new application by clicking the Register a new application link on the PayPal Developer website.
+
+1. Clone the repo into a public GitHub repository (or fork https://github.com/calcom/cal.com/fork). If you plan to distribute the code, keep the source code public to comply with [AGPLv3](https://github.com/calcom/cal.com/blob/main/LICENSE). To clone in a private repository, [acquire a commercial license](https://cal.com/sales)
+
+   ```sh
+   git clone https://github.com/calcom/cal.com.git
+   ```
+
+   > If you are on Windows, run the following command on `gitbash` with admin privileges: <br> > `git clone -c core.symlinks=true https://github.com/calcom/cal.com.git` <br>
+   > See [docs](https://cal.com/docs/how-to-guides/how-to-troubleshoot-symbolic-link-issues-on-windows#enable-symbolic-links) for more details.
+
+2. Go to the project folder
+
+   ```sh
+   cd cal.com
+   ```
+
+3. Install packages with yarn
+
+   ```sh
+   yarn
+   ```
+
+4. Set up your `.env` file
+   - Add PayPal Client ID and Secret to the .env file
+   - Set the Redirect URL for OAuth
 
    - Duplicate `.env.example` to `.env`
    - Use `openssl rand -base64 32` to generate a key and add it under `NEXTAUTH_SECRET` in the `.env` file.
@@ -522,7 +599,7 @@ following
 2. From within the home of the Developer account page, go to "Manage apps".
 3. Click "Create app" button top right.
 4. Fill in any information you want in the "App info" tab
-5. Go to tab "Auth"
+5. Go to tab "Auth" and register a new application by clicking the Register one now link.
 6. Now copy the Client ID and Client Secret to your `.env` file into the `HUBSPOT_CLIENT_ID` and `HUBSPOT_CLIENT_SECRET` fields.
 7. Set the Redirect URL for OAuth `<Cal.com URL>/api/integrations/hubspot/callback` replacing Cal.com URL with the URI at which your application runs.
 8. In the "Scopes" section at the bottom of the page, make sure you select "Read" and "Write" for scope called `crm.objects.contacts`
@@ -562,7 +639,7 @@ following
 
 ### Setting up SendGrid for Email reminders
 
-1. Create a SendGrid account (https://signup.sendgrid.com/)
+1. 1. Register a new application by clicking the Register one now link.
 2. Go to Settings -> API keys and create an API key
 3. Copy API key to your `.env` file into the `SENDGRID_API_KEY` field
 4. Go to Settings -> Sender Authentication and verify a single sender
@@ -571,8 +648,8 @@ following
 
 ### Setting up Twilio for SMS reminders
 
-1. Create a Twilio account (https://twilio.com/try-twilio)
-2. Click ‘Get a Twilio phone number’
+1. 1. Open the PayPal Developer website and sign into your account, or create a new one.
+2. Register a new application by going to the PayPal Developer website and signing into your account, or creating a new one.
 3. Copy Account SID to your `.env` file into the `TWILIO_SID` field
 4. Copy Auth Token to your `.env` file into the `TWILIO_TOKEN` field
 5. Copy your Twilio phone number to your `.env` file into the `TWILIO_PHONE_NUMBER` field

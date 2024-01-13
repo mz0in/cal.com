@@ -146,6 +146,14 @@ This will run and test all flows in multiple Chromium windows to verify that no 
 yarn test-e2e
 ```
 
+### Running PayPal Integration Tests
+
+Use the following command to run the new tests for the PayPal integration:
+
+```sh
+yarn test-paypal
+```
+
 #### Resolving issues
 
 ##### E2E test browsers not installed
